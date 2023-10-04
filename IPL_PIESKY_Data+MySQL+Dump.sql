@@ -317,7 +317,7 @@ INSERT INTO IPL_USER VALUES ('admin','Qiheq667','Admin','System administrator'),
 
 -- Dump completed
 
-#Q1 : 1.	Show the percentage of wins of each bidder in the order of highest to lowest percentage.
+#Showing the percentage of wins of each bidder in the order of highest to lowest percentage.
 select * from ipl_match_schedule;
 select * from ipl_bidding_details;
 select * from ipl_bidder_points;
@@ -332,7 +332,7 @@ on a.BIDDER_ID=b.BIDDER_ID
 group by 1 , 2
 order by 3 desc;
 
-#Q2: 2.	Display the number of matches conducted at each stadium with stadium name, city from the database.
+#Displaying the number of matches conducted at each stadium with stadium name, city from the database.
 
 
 select a.STADIUM_ID,a.STADIUM_NAME,a.CITY,count(b.MATCH_ID)
@@ -341,7 +341,7 @@ join ipl_match_schedule b
 on a.STADIUM_ID=b.STADIUM_ID
 group by 1 ,2 ,3 ;
 
-#3) In a given stadium, what is the percentage of wins by a team which has won the toss?
+#In a given stadium, displaying the percentage of wins by a team which has won the toss.
 
 select a.STADIUM_NAME,b.match_id,truncate((sum(case when c.TOSS_WINNER=c.MATCH_WINNER then 1 else 0 end)/count(*))*100,2) as toss_match_win
 from ipl_stadium a
@@ -352,7 +352,7 @@ on b.match_id=c.match_id
 group by 1
 order by 3 desc;
 
-#4) Show the total bids along with bid team and team name.
+#Showing the total bids along with bid team and team name.
 
 select sum(a.NO_OF_BIDS),b.BID_TEAM,c.TEAM_NAME
 from ipl_bidder_points a
@@ -362,20 +362,21 @@ join ipl_team c
 on b.bid_team=c.TEAM_ID
 group by 3;
 
-#5) Show the team id who won the match as per the win details.
+#Showing the team id who won the match as per the win details.
+
 select a.match_id,b.team_id,b.team_name from ipl_match a join ipl_team b on 
 TRIM(substr(SUBSTRING_INDEX(a.WIN_DETAILS, " ", 2),5,5))= b.Remarks;
 
 
 
-#6) Display total matches played, total matches won and total matches lost by team along with its team name.
+#Displaying total matches played, total matches won and total matches lost by team along with its team name.
 select a.TEAM_ID,a.MATCHES_PLAYED,a.MATCHES_WON,a.MATCHES_LOST,b.TEAM_NAME
 from ipl_team_standings a
 join ipl_team b
 on a.TEAM_ID=b.TEAM_ID
 group by 5;
 
-#7)  Display the bowlers for Mumbai Indians team.
+#Displaying the bowlers for Mumbai Indians team.
 select a.team_id,a.player_role,b.TEAM_NAME,c.PLAYER_NAME
 from ipl_team_players a
 join ipl_team b
@@ -385,7 +386,7 @@ on a.PLAYER_ID=c.PLAYER_ID
 where TEAM_NAME='Mumbai Indians'
 and PLAYER_ROLE='Bowler';
 
-#8) How many all-rounders are there in each team, Display the teams with more than 4 all-rounder in descending order.
+#Displaying how many all-rounders are there in each team, Displaying the teams with more than 4 all-rounder in descending order.
 select a.TEAM_ID,count(*) as total_all_rounders,b.TEAM_NAME
 from ipl_team_players a 
 join ipl_team b
